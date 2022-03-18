@@ -1,11 +1,15 @@
 package week4.day2;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -13,7 +17,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SortableWebTable {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		// setup driver and prepare browser
 		WebDriverManager.chromedriver().setup();
@@ -47,6 +51,11 @@ public class SortableWebTable {
 		Collections.sort(namesBeforeSort);
 		System.out.println("Names after sorting through codes " + namesBeforeSort);
 
+		// screenshot before sort
+		File beforeSort = driver.getScreenshotAs(OutputType.FILE);
+		File img = new File("./Screenshot/beforeSortableWebTable.jpg");
+		FileUtils.copyFile(beforeSort, img);
+
 		// sort table by names
 		driver.findElement(By.xpath("//th[text()='Name']")).click();
 
@@ -76,6 +85,11 @@ public class SortableWebTable {
 		if (namesBeforeSort.equals(namesAfterSort)) {
 			System.out.println("Congrats! Sorting functionality in page works!!");
 		}
+
+		// Screenshot after Sorting Web table
+		File afterSort = driver.getScreenshotAs(OutputType.FILE);
+		File img1 = new File("./Screenshot/afterSortableWebTable.jpg");
+		FileUtils.copyFile(afterSort, img1);
 
 		// close driver
 		driver.quit();
